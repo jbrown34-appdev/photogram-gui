@@ -41,4 +41,21 @@ class PhotosController < ApplicationController
     redirect_to("/photos/#{a_new_photo.id}")
   end
 
+   def update
+    #Parameters: {"input_image"=>"https://robohash.org/suntprovidentassumenda.png?size=300x300&set=set1", "input_caption"=>"All dwarfs are bastards in their father's eyes", "modify_id"=>"695"}
+    photo_id = params.fetch("modify_id")
+    input_image = params.fetch("input_image")
+    input_caption = params.fetch("input_caption")
+    
+    matching_photos= Photo.where({ :id => photo_id})
+    the_photo= matching_photos.at(0)
+
+    the_photo.image = input_image
+    the_photo.caption = input_caption
+
+    the_photo.save
+
+    redirect_to("/photos/#{the_photo.id}")
+  end
+
 end 
